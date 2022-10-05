@@ -30,10 +30,19 @@ window.addEventListener('load', async () => {
 
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get('id');
+    if (!id) {
+        location.replace('/');
+        return;
+    }
     const response = await getPet(id);
     error = response.error;
     pet = response.data;
-    displayPet();
+    if (error) {
+        location.replace('/');
+    } else {
+        displayPet();
+        displayComments();
+    }
 
     // > Part C: also call display comments in addition to display pet
 });
